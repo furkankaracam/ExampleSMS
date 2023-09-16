@@ -7,8 +7,6 @@ firmadır. Bu müşterilerin kendilerine ait kullanıcı adları ve
 yapabilir, sms raporlarını(kayıtlarını) görebilir, sms rapor
 detayını görebilir ve bu raporları tarih filtresine göre
 filtreleyebilir.
-
-
 ## Bilgisayarınızda Çalıştırın
 
 Projeyi klonlayın
@@ -23,10 +21,13 @@ Proje dizinine gidin
   cd ExampleSMS
 ```
 
-Gerekli paketleri yükleyin
+Bağımlılıkları yükleyin
 
 ```bash
   npm install
+```
+```bash
+  composer install
 ```
 
 .env dosyanızın veritabanı ayarlarını güncelleyin.
@@ -34,7 +35,7 @@ Gerekli paketleri yükleyin
 Veritabanı migrasyonlarını yapın
 
 ```bash
-  php artisan:migrate
+  php artisan migrate
 ```
 
 Veritabanına sahte verileri ekleyin.
@@ -48,6 +49,14 @@ Sunucuyu çalıştırın
 ```bash
   php artisan serve
 ```
+
+UnitTestleri çalıştırın
+
+```bash
+  php artisan test
+```
+
+/api/documentation rotasından Swagger'a ulaşabilirsiniz.
 ## API Kullanımı
 
 #### Kullanıcı Kayıt İşlemi
