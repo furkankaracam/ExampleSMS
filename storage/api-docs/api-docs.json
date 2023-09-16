@@ -1,0 +1,223 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ExampleSMS API",
+        "description": "ExampleSMS firması müşterilerine sms gönderim hizmeti sunan bir\nfirmadır. Bu müşterilerin kendilerine ait kullanıcı adları ve\nşifreleri vardır. Müşteriler restful api kullanarak sms gönderimi\nyapabilir, sms raporlarını(kayıtlarını) görebilir, sms rapor\ndetayını görebilir ve bu raporları tarih filtresine göre\nfiltreleyebilir.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/": {},
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Kullanıcı"
+                ],
+                "summary": "Kullanıcı kayıt işlemi",
+                "requestBody": {
+                    "request": "UserRegisterRequest",
+                    "description": "Kullanıcı adı ve parola zorunlu alanlar, Kullanıcı adı benzersiz olmalı",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "username"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Kayıt Başarılı"
+                    },
+                    "422": {
+                        "description": "Eksik veya Hatalı veri girişi"
+                    },
+                    "500": {
+                        "description": "Sunucu hatası"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Kullanıcı"
+                ],
+                "summary": "Kullanıcı giriş işlemi yapıldıktan sonra geriye JWT Token döndürür",
+                "requestBody": {
+                    "request": "UserLoginRequest",
+                    "description": "Kullanıcı adı ve parola ile giriş yapılabilir",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "username"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Giriş Başarılı"
+                    },
+                    "422": {
+                        "description": "Eksik veya Hatalı veri girişi"
+                    }
+                }
+            }
+        },
+        "/api/sms": {
+            "get": {
+                "tags": [
+                    "SMS Servis"
+                ],
+                "summary": "Mesaj raporları",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "Tarihe göre filtreleme (Y-m-d) (OPSİYONEL)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Raporlar başarıyla getirildi"
+                    },
+                    "401": {
+                        "description": "Yetkisiz"
+                    },
+                    "500": {
+                        "description": "Sunucu hatası"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/sms/show/{id}": {
+            "get": {
+                "tags": [
+                    "SMS Servis"
+                ],
+                "summary": "Mesaj rapor detayı",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Mesaj ID'si",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rapor başarıyla getirildi"
+                    },
+                    "500": {
+                        "description": "Sunucu hatası"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/sms/send": {
+            "post": {
+                "tags": [
+                    "SMS Servis"
+                ],
+                "summary": "Sms gönderme",
+                "requestBody": {
+                    "request": "UserLoginRequest",
+                    "description": "Kullanıcı adı ve parola ile giriş yapılabilir",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "kullanici_adi"
+                                    },
+                                    "number": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "+905442241798"
+                                    },
+                                    "message": {
+                                        "type": "string",
+                                        "example": "Gönderilen mesaj içeriği"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mesaj başarıyla gönderildi"
+                    },
+                    "401": {
+                        "description": "Yetkisiz"
+                    },
+                    "422": {
+                        "description": "Hatalı veya eksik veri girişi"
+                    },
+                    "500": {
+                        "description": "Sunucu hatası"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
