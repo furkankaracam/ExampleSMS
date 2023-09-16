@@ -46,7 +46,7 @@ Veritabanına sahte verileri ekleyin.
 Sunucuyu çalıştırın
 
 ```bash
-  npm run start
+  php artisan serve
 ```
 ## API Kullanımı
 
