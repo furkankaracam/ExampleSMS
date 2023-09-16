@@ -20,7 +20,7 @@ Projeyi klonlayın
 Proje dizinine gidin
 
 ```bash
-  cd vatansoft
+  cd ExampleSMS
 ```
 
 Gerekli paketleri yükleyin
